@@ -6,7 +6,7 @@
 
 - Installer ubuntu 18.04 en machine virtuelle (Faire une mise à jour dus système est recommandée)
 
-  ![](img/vm#1.png)
+  ![](img/vm1.png)
 
 - Installer git, docker et docker-compose sur la machine virtuelle
 
@@ -40,7 +40,7 @@
 
 - Déplacer les fichiers ***reducer.py*** et ***mapper.py*** dans le repertoire `~/Downloads`
 
-  ![](img/vm#2.png)
+  ![](img/vm2.png)
 
 - Copier les deux fichiers scripts sur le namenode ainsi que le fichier de test
 
