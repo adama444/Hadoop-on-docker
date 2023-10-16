@@ -6,7 +6,7 @@
 
 - Installer ubuntu 18.04 en machine virtuelle (Faire une mise à jour dus système est recommandée)
 
-  ![](img/vm1.png)
+  ![vm](img/vm1.png)
 
 - Installer git, docker et docker-compose sur la machine virtuelle
 
@@ -40,7 +40,7 @@
 
 - Déplacer les fichiers ***reducer.py*** et ***mapper.py*** dans le repertoire `~/Downloads`
 
-  ![](img/vm2.png)
+  ![vm](img/vm2.png)
 
 - Copier les deux fichiers scripts sur le namenode ainsi que le fichier de test
 
@@ -115,3 +115,53 @@
 - Pour arrêter les conteneurs dockers
 
   `docker-compose down`
+
+## Lab 2
+
+- Copier le fichier `docker-compose.yml` dans le répertoire `~/Downloads/docker-hadoop` et écraser l'ancien fichier
+
+- Relancer les conteneurs si jamais vous les avez arrêté et vérifier qu'ils ont bien demarré
+
+  `docker-compose up -d`
+
+  `docker ps`
+
+- Vérifier que les datanodes sont bien actifs en allant sur le lien `http://localhost:9870`
+
+  ![vm](img/vm3.png)
+
+- Suite à la modification du nombre de datanode, le namenode passe en mode **safemode** juste le temps que les datanodes confirment tous les blocs de fichiers disponibles. Comme l'on a eu à faire des manipulations avant avec un seul datanode, nous allons retirer le mode **safemode** et supprimer nos anciens fichiers
+
+  `docker exec -it namenode bash`
+
+  `hdfs dfsadmin -safemode get`
+
+  `hdfs dfsadmin -safemode leave`
+
+  ![vm](img/vm4.png)
+
+  `hdfs dfs -rm -r input output`
+
+- Télécharger n'importe quel fichier de 700MB au moins
+
+  ![vm](img/vm5.png)
+
+- Relancer les conteneurs docker de hadoop et copier le fichier vers le namenode (Dans mon cas un fichier video)
+
+  `docker-compose down`
+
+  `docker-compose up -d`
+
+  `docker cp ~/Downloads/vid.mp4 namenode:vid.mp4`
+
+- Ajouter le fichier au hdfs
+
+  `docker exec -it namenode bash`
+
+  `hdfs dfs -put vid.mp4 .`
+
+  <u>PS:</u> N'oubliez pas de retirer le safemode :p
+
+  ![vm](img/vm6.png)
+
+  
